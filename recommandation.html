@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gift Idea Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8f1;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    select, input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #ff7043;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e64a19;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #444;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Gift Idea Generator</h2>
+
+  <select id="occasion">
+    <option value="">Select Occasion</option>
+    <option value="birthday">Birthday</option>
+    <option value="anniversary">Anniversary</option>
+    <option value="graduation">Graduation</option>
+    <option value="holiday">Holiday</option>
+  </select>
+
+  <input type="text" id="tags" placeholder="Enter tags (e.g. tech, fashion, funny)" />
+
+  <button onclick="generateGift()">Generate Gift Idea</button>
+
+  <div class="result" id="resultText"></div>
+</div>
+
+<script>
+  const giftIdeas = {
+    birthday: ["Smartwatch", "Customized Mug", "Funny T-Shirt"],
+    anniversary: ["Photo Album", "Couple’s Spa Kit", "Dinner Date Voucher"],
+    graduation: ["Laptop Stand", "Motivational Book", "Bluetooth Earbuds"],
+    holiday: ["Travel Pillow", "Scented Candle Set", "Board Game"]
+  };
+
+  function generateGift() {
+    const occasion = document.getElementById("occasion").value;
+    const tags = document.getElementById("tags").value.toLowerCase();
+    const result = document.getElementById("resultText");
+
+    if (!occasion) {
+      result.textContent = "Please select an occasion.";
+      return;
+    }
+
+    let suggestions = giftIdeas[occasion];
+
+    // Filter by tags
+    if (tags) {
+      suggestions = suggestions.filter(item => 
+        tags.split(',').some(tag => item.toLowerCase().includes(tag.trim()))
+      );
+    }
+
+    if (suggestions.length > 0) {
+      const randomGift = suggestions[Math.floor(Math.random() * suggestions.length)];
+      result.textContent = `Gift Idea: ${randomGift}`;
+    } else {
+      result.textContent = "No matching gift ideas. Try different tags!";
+    }
+  }
+</script>
+
+</body>
+</html>
